@@ -1,4 +1,4 @@
-vimrc_path="$HOME/dotfiles/vimrc"
+vimrc_path="$HOME/.dotfiles/vimrc"
 home_path="$HOME/.vimrc"
 
 if [ -f "$home_path" ]; then
