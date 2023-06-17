@@ -19,16 +19,21 @@ To install and use the Vim configuration provided in this repository, follow the
 
    ```bash
    git clone git@github.com:Roberamelaek/dotfile.git
+   
 2. Rename the dotfile to .dotfile:
+
    ```bash
    mv dotfiles .dotfiles
+   
 3. Change into the repository directory:
    
    ```bash
    cd .dotfiles
 4. Run the configuration script to install the Vim settings:
+
    ```bash
    sh config.sh
+   
 - The `vimrc` file will be copied to your home directory (`~/`) and Vim will be configured accordingly.
 - Now you're all set to use the customized Vim configuration!
 - Feel free to customize the vimrc file before you run <code>sh config.sh</code> have fun with the project and leave feadback for more if you have any questions or helpful and fun ideas!!
