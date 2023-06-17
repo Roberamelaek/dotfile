@@ -30,7 +30,6 @@ To install and use the Vim configuration provided in this repository, follow the
    ```bash
    cd .dotfiles
 4. Run the configuration script to install the Vim settings:
-
    ```bash
    sh config.sh
    
