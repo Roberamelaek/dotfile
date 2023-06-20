@@ -19,3 +19,18 @@ else
 	echo "Linked sucssusfully"
 
 fi
+
+if grep -Fxq "source ~/.dotfiles/.prompt" ~/.bashrc; then
+
+	echo "checking if the connection of the file..."
+	echo "The file is already linked!."
+
+else 
+	echo "Linking .prompt to .bashrc..."
+    echo "source ~/.dotfiles/.prompt">> ~/.bashrc
+	echo "Linked sucssusfully"
+
+fi
+
+
+
