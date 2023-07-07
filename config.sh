@@ -1,6 +1,8 @@
 vimrc_path="$HOME/.dotfiles/vimrc"
 home_path="$HOME/.vimrc"
 
+#the gitrc file
+
 gitrc_path="$HOME/.dotfiles/gitconfig"
 git_path="$HOME/.gitconfig"
 
