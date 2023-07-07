@@ -1,36 +1,14 @@
 vimrc_path="$HOME/.dotfiles/vimrc"
 home_path="$HOME/.vimrc"
 
-if [ -f "$home_path" ]; then
-	echo ".vimrc file already exsists aborting"
-else
-	ln -s "$vimrc_path" "$home_path"
-	echo "The symboilc linking do sucssusfully"
-fi
+tmuxrc_path="$HOME/.dotfiles/tmuxrc"
+tmux_path="$HOME/.tmux.conf"
 
-if grep -Fxq "source ~/.dotfiles/.alias" ~/.bashrc; then
+[ -f "$home_path" ] && echo ".vimrc file already exists. Aborting." || ln -s "$vimrc_path" "$home_path" && echo "Symbolic linking successful."
 
-	echo "Checking if the connection of the file..."
-	echo "The file is already linked!."
+[ -f "$tmux_path" ] && echo ".tmux.conf file already exists. Aborting." || ln -s "$tmuxrc_path" "$tmux_path" && echo "symbolic linking successful."
 
-else
-	echo "Linking .alias to .bashrc"
-	echo "source ~/.dotfiles/.alias">> ~/.bashrc
-	echo "Linked sucssusfully"
+grep -q "source ~/.dotfiles/.alias" ~/.bashrc && echo "The file is already linked." || echo "source ~/.dotfiles/.alias" >> ~/.bashrc && echo "Linked successfully."
 
-fi
-
-if grep -Fxq "source ~/.dotfiles/.prompt" ~/.bashrc; then
-
-	echo "checking if the connection of the file..."
-	echo "The file is already linked!."
-
-else 
-  echo "Linking .prompt to .bashrc..."
-  echo "source ~/.dotfiles/.prompt">> ~/.bashrc
-	echo "Linked sucssusfully"
-
-fi
-
-
+grep -q "source ~/.dotfiles/.prompt" ~/.bashrc && echo "The file is already linked." || echo "source ~/.dotfiles/.prompt" >> ~/.bashrc && echo "Linked successfully."
 
