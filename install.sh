@@ -54,3 +54,14 @@ create_symlink "$vimrc_path" "$vimrc_dest"
 # Run the gitinstall.sh script
 bash "$gitinstall_path"
 
+# Array of file names to source
+files=("prompt" "alias")
+
+# Add source commands to .bashrc for each file
+for file in "${files[@]}"; do
+    filepath="$HOME/.dotfiles/.$file"
+    if [[ -f "$filepath" ]]; then
+        echo "source $filepath" >> "$HOME/.bashrc"
+    fi
+done
+
