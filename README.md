@@ -20,7 +20,7 @@ To install and use the configuration provided in this repository, follow these s
 1. Clone the repository to your local machine using the following command:
 
    ```bash
-   git clone git@github.com:Roberamelaek/dotfile.git
+   git clone https://github.com/Roberamelaek/dotfile.git
    
 2. Rename the dotfile to .dotfile:
 
