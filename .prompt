@@ -1,5 +1,5 @@
 ## Prompt
-
+set -o vi
 function parse_git_branch(){
     # Parse the current git branch name and print it
     which git &>/dev/null || return

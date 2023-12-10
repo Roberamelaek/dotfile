@@ -14,8 +14,13 @@ export NB_INDICATOR_PINNED="💖"
 # https://github.com/xwmx/nb
 ###############################################################################
 export NB_ACE_ENABLED=1
-export EDITOR="vim" # Set by `nb` • Tue Jul  4 08:19:36 PM EDT 2023
+export EDITOR="nvim" # Set by `nb` • Tue Jul  4 08:19:36 PM EDT 2023
+
+NB_IMAGE_TOOL=imgcat
 
 export NB_COLOR_THEME="${NB_COLOR_THEME:-forest}" # Set by `nb` • Thu Jul  6 10:00:16 PM EDT 2023
 export  NB_INDICATOR_EBOOK="📖"
 export NB_INDICATOR_NOTEBOOK="📖"
+
+NB_MARKDOWN_TOOL=glow
+

@@ -1,2 +1,4 @@
 alias g="git"
+alias nv="nvim"
 alias v="vim"
+alias dc="docker-compose"

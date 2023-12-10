@@ -2,4 +2,14 @@
 unbind-key C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+# Use hjkl for window navigation
+setw -g mode-keys vi
+# Enable vim-like pane navigation using hjkl
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
 
