@@ -1,3 +1,4 @@
+## Sunday, 2023-50-10
 #!/bin/bash
 
 # Set up global alias shortcuts for Git configurations

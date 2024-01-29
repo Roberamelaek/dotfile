@@ -65,17 +65,18 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
 inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
-
 " Enable folding based on Markdown headings
 
 autocmd FileType markdown setlocal foldmethod=marker
 autocmd FileType markdown setlocal foldmarker=##,##
 
-command! InsertDate execute 'normal! O<C-R>=strftime("## %A, %Y-%M-%d")<CR>'
+command! InsertDate execute 'normal! O<C-R>=strftime("%b %d, %y")<CR>'
 
 nnoremap <C-C><C-C> :InsertDate<CR>
 
 set foldmethod=manual
+
+
 
 syntax enable
 
