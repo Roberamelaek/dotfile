@@ -8,7 +8,7 @@ package_installed() {
 }
 
 # List of packages to check and install
-packages=("vim" "tmux" "git")
+packages=("vim" "tmux" "git" "neovim")
 
 for package in "${packages[@]}"; do
     if ! package_installed "$package"; then
@@ -26,11 +26,13 @@ tmuxrc_path="$HOME/.dotfiles/tmuxrc"
 vimrc_path="$HOME/.dotfiles/vimrc"
 gitconfig_path="$HOME/.dotfiles/gitconfig"
 gitinstall_path="$HOME/.dotfiles/gitconfig/gitinstall.sh"
+init_vim_path="$HOME/.dotfiles/.config/nvim/init.vim"
 
 # Set the destination directories for the symbolic links
 nbrc_dest="$HOME/.nbrc"
 tmuxrc_dest="$HOME/.tmux.conf"
 vimrc_dest="$HOME/.vimrc"
+init_vim_dest="$HOME/.config/nvim/init.vim"
 
 # Function to create or recreate symbolic links
 create_symlink() {
@@ -50,12 +52,13 @@ create_symlink() {
 create_symlink "$nbrc_path" "$nbrc_dest"
 create_symlink "$tmuxrc_path" "$tmuxrc_dest"
 create_symlink "$vimrc_path" "$vimrc_dest"
+create_symlink "$init_vim_path" "$init_vim_dest"
 
 # Run the gitinstall.sh script
 bash "$gitinstall_path"
 
 # Array of file names to source
-files=("prompt" "alias")
+files=("alias" "prompt")
 
 # Add source commands to .bashrc for each file
 for file in "${files[@]}"; do
@@ -64,4 +67,3 @@ for file in "${files[@]}"; do
         echo "source $filepath" >> "$HOME/.bashrc"
     fi
 done
-
