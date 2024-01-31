@@ -39,7 +39,7 @@ nbrc_path="$HOME/.dotfiles/nbrc"
 tmuxrc_path="$HOME/.dotfiles/tmuxrc"
 vimrc_path="$HOME/.dotfiles/vimrc"
 gitconfig_path="$HOME/.dotfiles/gitconfig"
-gitinstall_path="$Home/.dotfiles/gitconfig/gitinstall.sh"
+gitinstall_path="$HOME/.dotfiles/gitconfig/gitinstall.sh"
 
 # Set the destination directories for the symbolic links
 nbrc_dest="$HOME/.nbrc"
@@ -89,7 +89,7 @@ curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Define Neovim configuration file
-NVIM_CONFIG= $HOME/.config/nvim/init.vim
+NVIM_CONFIG = $HOME/.config/nvim/init.vim
 bash $HOME/.dotfiles/scripts/install_init_vim.sh
 # Define plugin list
 PLUGINS=(
