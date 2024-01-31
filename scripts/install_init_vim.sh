@@ -15,11 +15,11 @@ if [ -f "$SOURCE" ]; then
 
 	fi
 
-	ln -s "$source_path" "$destination_path"
+	ln -s "$SOURCE" "$DESTINATION"
 	echo "init.vim copied successfully."
 else
 
-    ln -s "$source_path" "$destination_path"
+    ln -s "$SOURCE" "$DESTINATION"
     
 	echo "SOURCE init.vim file not found in ~/.config/nvim/init.vim"
     echo "init.vim copied successfully"
@@ -43,11 +43,6 @@ PLUGINS=(
 )
 
 # Add plugin installations to Neovim configuration file
-echo 'call plug#begin()' > $NVIM_CONFIG
-for PLUGIN in "${PLUGINS[@]}"; do
-    echo "Plug 'https://github.com/$PLUGIN'" >> $NVIM_CONFIG
-done
-echo 'call plug#end()' >> $NVIM_CONFIG
 
 # Open Neovim and install plugins
 nvim +PlugInstall +qall
