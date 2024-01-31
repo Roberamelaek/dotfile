@@ -31,9 +31,10 @@ To install and use the configuration provided in this repository, follow these s
    
    ```bash
    cd .dotfiles
+
 4. Run the configuration script to install the Vim settings:
    ```bash
-   sh install.sh
+   bash install.sh
    
 - The files will be copied to your home directory (`~/`) and Vim will be configured accordingly.
 - Now you're all set to use the customized Vim configuration!
