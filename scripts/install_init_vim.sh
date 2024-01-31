@@ -3,7 +3,7 @@ apt-get install neovim
 
 SOURCE="$HOME/.dotfiles/.config/nvim/init.vim"
 DESTINATION="$HOME/.config/nvim/init.vim"
-NVIM_CONFIG= $HOME/.config/nvim/init.vim
+NVIM_CONFIG="$HOME/.config/nvim/init.vim"
 
 if [ -f "$SOURCE" ]; then
 
