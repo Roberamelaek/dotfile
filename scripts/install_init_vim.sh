@@ -1,7 +1,7 @@
 apt-get update
 apt-get install neovim
 
-SOURCE="$HOME/.dotfiles/.config/nvim/init.vim"
+SOURCE="/.dotfiles/.config/init.vim"
 DESTINATION="$HOME/.config/nvim/init.vim"
 
 if [ -f "$SOURCE" ]; then
@@ -20,5 +20,7 @@ else
 
     cp "$SOURCE" "$DESTINATION"
     
-	echo "SOURCE init.vim file not found in ~/.config/nvim/init.vim"
+	echo "SOURCE init.vim file not found in ~/.config/init.vim"
     echo "init.vim copied successfully"
+
+fi

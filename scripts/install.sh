@@ -20,12 +20,26 @@ for package in "${packages[@]}"; do
     fi
 done
 
+
+echo "---------------------------"
+
+if ! grep -qF "source /.dotfiles/.alias" ~/.bashrc ; then
+	echo "source /.dotfiles/.alias"  >> ~/.bashrc
+
+	echo "source /.dotfiles/.prompt" >> ~/.bashrc
+
+fi
+		
+
+echo "------------------------------"
+
+
 # Set the paths for your configuration files
 nbrc_path="$HOME/.dotfiles/nbrc"
 tmuxrc_path="$HOME/.dotfiles/tmuxrc"
 vimrc_path="$HOME/.dotfiles/vimrc"
 gitconfig_path="$HOME/.dotfiles/gitconfig"
-gitinstall_path="$HOME/.dotfiles/gitconfig/gitinstall.sh"
+gitinstall_path="/.dotfiles/gitconfig/gitinstall.sh"
 
 # Set the destination directories for the symbolic links
 nbrc_dest="$HOME/.nbrc"
@@ -68,15 +82,15 @@ done
 #!/bin/bash
 
 # Create directory for Neovim configuration if it doesn't exist
-mkdir -p ~/.config/nvim
+mkdir -p /.config/nvim
 
 # Create/initiate plugin manager (assuming you're using vim-plug)
-curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
+curl -fLo /.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Define Neovim configuration file
-NVIM_CONFIG=~/.config/nvim/init.vim
-
+NVIM_CONFIG=/.config/nvim/init.vim
+bash ./scripts/install_init_vim.sh
 # Define plugin list
 PLUGINS=(
     "tpope/vim-surround"
@@ -102,5 +116,4 @@ echo 'call plug#end()' >> $NVIM_CONFIG
 
 # Open Neovim and install plugins
 nvim +PlugInstall +qall
-
 
