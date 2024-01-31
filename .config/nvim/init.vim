@@ -97,3 +97,41 @@ endfunction
 
 " Set foldmethod to 'expr' and foldexpr to the custom function for Markdown files
 autocmd FileType markdown setlocal foldmethod=expr foldexpr=MarkdownFoldExpr()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
