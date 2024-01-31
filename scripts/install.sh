@@ -89,7 +89,7 @@ curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # Define Neovim configuration file
-NVIM_CONFIG = $HOME/.config/nvim/init.vim
+NVIM_CONFIG= $HOME/.config/nvim/init.vim
 bash $HOME/.dotfiles/scripts/install_init_vim.sh
 # Define plugin list
 PLUGINS=(
