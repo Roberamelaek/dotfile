@@ -17,22 +17,27 @@ Instructions on how to install, use, and personalize will be provided below.
 
 To install and use the configuration provided in this repository, follow these steps:
 
-1. Clone the repository to your local machine using the following command:
+
+1. firstly you need to use root user:
+cd    ```bash
+      sudo -i
+
+2. Clone the repository to your local machine using the following command:
 
    ```bash
    git clone https://github.com/Roberamelaek/dotfile.git
    
-2. Rename the dotfile to .dotfile:
+3. Rename the dotfile to .dotfile:
 
    ```bash
    mv dotfile .dotfiles
    
-3. Change into the repository directory:
+4. Change into the repository directory:
    
    ```bash
    cd .dotfiles
 
-4. Run the configuration script to install the Vim settings:
+5. Run the configuration script to install the Vim settings:
    ```bash
    bash install.sh
    

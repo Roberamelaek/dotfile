@@ -4,7 +4,7 @@ set -e
 # Check if a package is installed
 package_installed() {
     package="$1"
-    command -v "$package" >/dev/null 2>&1
+    dpkg -l | grep -qE "^ii\s+$package\s"
 }
 
 # List of packages to check and install
@@ -13,23 +13,22 @@ packages=("vim" "tmux" "git")
 for package in "${packages[@]}"; do
     if ! package_installed "$package"; then
         echo "Installing $package..."
-        apt-get update
-        apt-get install -y "$package"
+        sudo apt update
+        sudo apt install -y "$package"
     else
         echo "$package is already installed."
     fi
 done
 
-
 echo "---------------------------"
 
 if ! grep -qF "source $HOME/.dotfiles/.alias" ~/.bashrc ; then
-	echo "source $HOME/.dotfiles/.alias"  >> ~/.bashrc
+        echo "source $HOME/.dotfiles/.alias"  >> ~/.bashrc
 
-	echo "source $HOME/.dotfiles/.prompt" >> ~/.bashrc
+        echo "source $HOME/.dotfiles/.prompt" >> ~/.bashrc
 
 fi
-		
+
 
 echo "------------------------------"
 
