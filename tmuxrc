@@ -1,5 +1,44 @@
-# Remap prefix key
-unbind-key C-b
-set-option -g prefix C-a
-bind-key C-a send-prefix
+####################################################################################################
+#                       TMUX COMMAND SHORTCUTS                                                     #
+###################################################################################################
+#  bind is short for bind-key
+# tmux source-file ~/.tmux.conf #is used to source the file
 
+# change prefix key to C-a, easier to type, same to "screen"
+unbind C-b
+set -g prefix C-a
+
+# split windows to panes using | and - while keeping the current path
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+bind c new-window -c "#{pane_current_path}"
+bind-key -n C-S-Left swap-window -t -1
+bind-key -n C-S-Up select-window -t -1
+bind-key -n C-S-Right swap-window -t +1\; select-window -t +1
+
+unbind '"'
+unbind %
+
+# Use hjkl for windows navigation
+#
+setw -g mode-keys vi
+# Navigate between panes using vim like hjkl keys
+bind-key h select-pane -L
+bind-key j select-pane -D
+bind-key k select-pane -U
+bind-key l select-pane -R
+
+#list of tmux plugins
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-yank'
+
+
+set -g @resurrect-strategy-vim 'session'
+
+
+
+
+
+# Initialize TPM (keep this line at the very bottom of your tmux.conf).
+run -b '~/.tmux/plugins/tpm/tpm'

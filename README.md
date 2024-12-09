@@ -18,7 +18,7 @@ Instructions on how to install, use, and personalize will be provided below.
 To install and use the configuration provided in this repository, follow these steps:
 
 
-1. firstly you need to use root user:
+1. firstly you need to use root use
 cd    ```bash
       sudo -i
 
