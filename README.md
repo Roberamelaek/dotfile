@@ -8,7 +8,7 @@ Instructions on how to install, use, and personalize will be provided below.
 
 ## Contents
 
-1. vimrc
+1. Nvim
 2. Tmuxrc
 3. gitconfig.sh
 4. install.sh
