@@ -1,6 +1,8 @@
+
 ## Prompt
 
-function parse_git_branch(){
+
+function parse_git_branch() {
     # Parse the current git branch name and print it
     which git &>/dev/null || return
     local branch=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
@@ -8,16 +10,11 @@ function parse_git_branch(){
 }
 
 function set_PS1 {
-    # The built-in PS1 variable defines the format of the user's shell
-    # prompt. This version displays:
-    #   - date/time (\D{})
-    #   - current directory (\w)
-    #   - current git branch (parse_git_branch)
-    #   - user name (\u)
-    #   - host machine (\h)
-    # See also: `man bash`
-    PS1='\[\e[1;33m\]\D{%b-%d %H:%M:%S}\[\e[0m\] \[\e[1;35m\]\w\[\e[0m\]$(parse_git_branch)
-\[\e[1;32m\][\u.\h]\[\e[0m\]$Ps1Tail> '
+    # Custom prompt with yellow-green background for date/time and purple-themed PS1
+    local Ps1Tail=">" # Define a default value for Ps1Tail
+    PS1='\[\e[48;5;190;38;5;57m\]┌ \D{%b-%d %H:%M:%S} ┐\[\e[0m\] \[\e[1;36m\]\w\[\e[0m\]$(parse_git_branch)
+\[\e[1;35m\][\u@\h]\[\e[0m\]$Ps1Tail '
 }
 
 set_PS1 # Call the set_PS1 function
+

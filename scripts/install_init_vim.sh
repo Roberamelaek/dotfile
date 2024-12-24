@@ -1,49 +1,26 @@
-apt-get update
-apt-get install neovim
 
-SOURCE="$HOME/.dotfiles/.config/init.vim"
-DESTINATION="$HOME/.config/nvim/init.vim"
-NVIM_CONFIG="$HOME/.config/nvim/init.vim"
+# Define source and destination directories
+SOURCE_DOTFILES="$HOME/.dotfiles/.config"
+DESTINATION_CONFIG="$HOME/.config"
 
-if [ -f "$SOURCE" ]; then
+# Files to semi-link
+FILES_TO_LINK=("nvim" "wall.png")
 
-	if [ -f "$DESTINATION" ]; then
+# Create symbolic links for specified files
+for FILE in "${FILES_TO_LINK[@]}"; do
+    SRC="$SOURCE_DOTFILES/$FILE"
+    DEST="$DESTINATION_CONFIG/$FILE"
 
-		rm "$DESTINATION"
+    if [ -e "$DEST" ]; then
+        echo "Deleting existing file or directory: $DEST"
+        rm -rf "$DEST"
+    fi
 
-		echo "Existing init.vim deleted."
-
-	fi
-
-	ln -s "$SOURCE" "$DESTINATION"
-	echo "init.vim copied successfully."
-else
-
-    ln -s "$SOURCE" "$DESTINATION"
-    
-	echo "SOURCE init.vim file not found in ~/.config/nvim/init.vim"
-    echo "init.vim copied successfully"
-fi
-
-
-# Define plugin list
-PLUGINS=(
-    "tpope/vim-surround"
-    "preservim/nerdtree"
-    "tpope/vim-commentary"
-    "vim-airline/vim-airline"
-    "lifepillar/pgsql.vim"
-    "ap/vim-css-color"
-    "rafi/awesome-vim-colorschemes"
-    "neoclide/coc.nvim"
-    "ryanoasis/vim-devicons"
-    "tc50cal/vim-terminal"
-    "preservim/tagbar"
-    "terryma/vim-multiple-cursors"
-)
-
-# Add plugin installations to Neovim configuration file
-
-# Open Neovim and install plugins
-nvim +PlugInstall +qall
+    if [ -e "$SRC" ]; then
+        echo "Creating symbolic link for $FILE"
+        ln -s "$SRC" "$DEST"
+    else
+        echo "Source $SRC does not exist. Skipping."
+    fi
+done
 

@@ -7,6 +7,14 @@ end
 
 -- Configure your plugins using Lazy.nvim
 require("lazy").setup({
+-- --     
+{ 
+	"rose-pine/neovim", 
+ 	name = "rose-pine",
+ 	config = function()
+ 		vim.cmd("colorscheme rose-pine-moon")
+ 	end
+},
 
 {
     "github/copilot.vim",
@@ -259,7 +267,7 @@ require("lazy").setup({
       })
     end,
   },
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+  { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
   { 'junegunn/fzf.vim' },
   { "nvim-lualine/lualine.nvim" },
   { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
@@ -290,7 +298,6 @@ require("lazy").setup({
 -- Optional: You can add your additional Lua configurations here
 require('cmpss')
 require("set")
-
-
-
-
+require('colorscheme')
+require('treesitter')
+--[[ require('rose-pine') ]]
