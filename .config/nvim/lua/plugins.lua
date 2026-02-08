@@ -22,13 +22,31 @@ return {
     workspaces = {
       {
         name = "personal",
-        path = "~/vaults/personal",
-      },
-      {
-        name = "work",
-        path = "~/vaults/work",
+        path = "~/Dropbox/2025",
       },
     },
+
+
+  templates = {
+      folder = "~/Dropbox/2025/Template/Daily.md",
+       -- make this format Jan 01 20
+      date_format = "%m %d %y",
+      time_format = "%H:%M",
+  },
+
+
+  daily_notes = {
+    -- Optional, if you keep daily notes in a separate directory.
+    folder = "~/Dropbox/2025/Daily",
+    -- Optional, if you want to change the date format for the ID of daily notes.
+    date_format = "%m-%d-%y",
+    -- Optional, if you want to change the date format of the default alias of daily notes.
+    alias_format = "%B %-d, %Y",
+    -- Optional, default tags to add to each new daily note created.
+    default_tags = { "daily-notes" },
+    -- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
+    template = nil
+  },
 
     -- see below for full list of options 👇
   },

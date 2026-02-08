@@ -1,8 +1,24 @@
+-- =========================================================
+-- Bootstrap lazy.nvim
+-- =========================================================
+--
+
+
 -- Install Lazy.nvim if it's not already installed
 local install_path = vim.fn.stdpath('data')..'/site/pack/lazy/start/lazy.nvim'
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/folke/lazy.nvim', install_path})
 end
+
+
+-- set conceallevel for markdown/obsidian files
+vim.api.nvim_create_autocmd("FileType", {
+ pattern = "markdown",
+  callback = function()
+    vim.opt_local.conceallevel = 2
+    vim.opt_local.concealcursor = "nc"  -- conceal while in normal and command mode
+  end,
+})
 
 
 -- Configure your plugins using Lazy.nvim
@@ -38,6 +54,8 @@ require("lazy").setup({
         vim.g.copilot_no_tab_map = true -- Use custom keymaps instead of `<Tab>`
     end,
 },
+
+
 
 -- add this to your lua/plugins.lua, lua/plugins/init.lua,  or the file you keep your other plugins:
 {
@@ -101,8 +119,18 @@ require("lazy").setup({
       })
     end,
   },
-
-
+----
+---
+{
+    'MeanderingProgrammer/render-markdown.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },            -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {},
+},
+---
 
 --------------------------------------
 ----------------------------------------
@@ -110,15 +138,28 @@ require("lazy").setup({
     "epwalsh/obsidian.nvim",
     config = function()
       require("obsidian").setup({
+          version = "*",
+          lazy = true,
+          ft = "markdown",
+  dependencies = {
+    -- Required.
+    "nvim-lua/plenary.nvim",
+
+    -- see below for full list of optional dependencies 👇
+  },
+
         workspaces = {
           {
-            name = "Self",
-            path = "~/.nb/home",
+             name = "Self",
+            path = "~/Dropbox/2025",
           },
+        },
+        templates = {
+          subdir = "Template",
         },
         completion = {
           nvim_cmp = true,
-          min_chars = 2,
+          min_chars = 1,
         },
         log_level = vim.log.levels.INFO,
         wiki_link_func = function(opts)
@@ -130,13 +171,13 @@ require("lazy").setup({
         preferred_link_style = "wiki",  -- or "markdown"
         disable_frontmatter = false,
         note_path_func = function(spec)
-          local sanitized_alias = spec.title:gsub(" ", "-"):gsub("[^A-Za-z0-9%-_]", ""):lower()
+          local sanitized_alias = spec.title:gsub(" ", "-"):gsub("[^A-Za-z-1-9%-_]", ""):lower()
           return (spec.dir / sanitized_alias):with_suffix(".md")
         end,
         ui = {
           enable = true,
-          update_debounce = 200,
-          max_file_length = 5000,
+          update_debounce = 199,
+          max_file_length = 4999,
           checkboxes = {
             [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
             ["x"] = { char = "", hl_group = "ObsidianDone" },
@@ -151,19 +192,38 @@ require("lazy").setup({
           tags = { hl_group = "ObsidianTag" },
           block_ids = { hl_group = "ObsidianBlockID" },
           hl_groups = {
-            ObsidianTodo = { bold = true, fg = "#f78c6c" },
-            ObsidianDone = { bold = true, fg = "#89ddff" },
-            ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
-            ObsidianTilde = { bold = true, fg = "#ff5370" },
-            ObsidianImportant = { bold = true, fg = "#d73128" },
-            ObsidianBullet = { bold = true, fg = "#89ddff" },
-            ObsidianRefText = { underline = true, fg = "#c792ea" },
-            ObsidianExtLinkIcon = { fg = "#c792ea" },
-            ObsidianTag = { italic = true, fg = "#89ddff" },
-            ObsidianBlockID = { italic = true, fg = "#89ddff" },
-            ObsidianHighlightText = { bg = "#75662e" },
+            ObsidianTodo = { bold = true, fg = "#f77c6c" },
+            ObsidianDone = { bold = true, fg = "#88ddff" },
+            ObsidianRightArrow = { bold = true, fg = "#f77c6c" },
+            ObsidianTilde = { bold = true, fg = "#ff5369" },
+            ObsidianImportant = { bold = true, fg = "#d73127" },
+            ObsidianBullet = { bold = true, fg = "#88ddff" },
+            ObsidianRefText = { underline = true, fg = "#c791ea" },
+            ObsidianExtLinkIcon = { fg = "#c791ea" },
+            ObsidianTag = { italic = true, fg = "#88ddff" },
+            ObsidianBlockID = { italic = true, fg = "#88ddff" },
+            ObsidianHighlightText = { bg = "#75661e" },
           },
         },
+ -- Specify the templates folder
+
+  -- Optional, boolean or a function that takes a filename and returns a boolean.
+  -- `true` indicates that you don't want obsidian.nvim to manage frontmatter.
+  daily_notes = {
+    -- Optional, if you keep daily notes in a separate directory.
+    folder = "Daily",
+
+    template = "Daily.md",
+    -- Optional, if you want to change the date format for the ID of daily notes.
+    date_format = "%b %d %y",
+    -- Optional, if you want to change the date format of the default alias of daily notes.
+    alias_format = "%b %d %y",
+    -- Optional, default tags to add to each new daily note created.
+    default_tags = { "daily-notes" },
+    -- Optional, if you want to automatically insert a template from your template directory like 'daily.md'
+  },
+
+
       })
     end
   },
@@ -269,7 +329,6 @@ require("lazy").setup({
   },
   { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" },
   { 'junegunn/fzf.vim' },
-  { "nvim-lualine/lualine.nvim" },
   { "nvim-telescope/telescope.nvim", dependencies = { "nvim-lua/plenary.nvim" } },
   {
     "nvim-lualine/lualine.nvim",
@@ -299,5 +358,5 @@ require("lazy").setup({
 require('cmpss')
 require("set")
 require('colorscheme')
-require('treesitter')
 --[[ require('rose-pine') ]]
+require('treesitter')
