@@ -54,6 +54,7 @@ bash install.sh --dry-run
 
 ```bash
 rm -f ~/.config/nvim ~/.tmux.conf ~/.nbrc ~/.prompt ~/.alias
+rm -rf ~/.config/wall.png ~/.obsidian/snippets/mycss.css
 rm -rf ~/.tmux/plugins
 # remove the two `source ~/.prompt` / `source ~/.alias` lines from ~/.bashrc
 ```
