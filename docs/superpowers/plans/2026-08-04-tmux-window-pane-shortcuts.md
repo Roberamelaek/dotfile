@@ -144,6 +144,7 @@ Run:
 ```bash
 SOCK="dev$$"
 tmux -L "$SOCK" new-session -d -s t -n base
+sleep 2   # login shell needs ~1.5s to reach a prompt on this machine
 tmux -L "$SOCK" send-keys -t t 'source /home/roba/.dotfiles/shell/.alias && nw foo' Enter
 sleep 0.4
 tmux -L "$SOCK" list-windows -F '#{window_name}'
@@ -157,6 +158,7 @@ Run:
 ```bash
 SOCK="dev$$"
 tmux -L "$SOCK" new-session -d -s t -n base
+sleep 2   # wait for the pane shell to reach a prompt
 tmux -L "$SOCK" send-keys -t t 'cd /tmp && source /home/roba/.dotfiles/shell/.alias && nw' Enter
 sleep 0.4
 tmux -L "$SOCK" list-windows -F '#{window_name}'
@@ -186,6 +188,7 @@ Run:
 ```bash
 SOCK="dev$$"
 tmux -L "$SOCK" new-session -d -s t -n base
+sleep 2   # wait for the pane shell to reach a prompt
 tmux -L "$SOCK" send-keys -t t 'source /home/roba/.dotfiles/shell/.alias && np api' Enter
 sleep 0.4
 tmux -L "$SOCK" list-panes -F '#{pane_title}' | grep -x api
@@ -202,6 +205,7 @@ Run:
 ```bash
 SOCK="dev$$"
 tmux -L "$SOCK" new-session -d -s t -n base
+sleep 2   # wait for the pane shell to reach a prompt
 tmux -L "$SOCK" send-keys -t t 'source /home/roba/.dotfiles/shell/.alias && np -v db' Enter
 sleep 0.4
 tmux -L "$SOCK" list-panes -F '#{pane_title}' | grep -x db
@@ -242,6 +246,7 @@ Run:
 ```bash
 SOCK="e2e$$"
 tmux -L "$SOCK" new-session -d -s t -n base
+sleep 2   # wait for the pane login shell to reach a prompt (~1.5s on this machine)
 tmux -L "$SOCK" send-keys -t t 'source /home/roba/.dotfiles/shell/.alias && nw foo && np bar' Enter
 sleep 0.5
 tmux -L "$SOCK" list-windows -F '#{window_name}'
