@@ -10,21 +10,21 @@ parse_git_branch() {
     branch="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)" || return 0
     [[ -n "$branch" ]] && printf ' %s' "$branch"
 }
-
-build_PS1() {
-    local last=$?
-
-    local when="\[\e[48;5;190;38;5;57m\] ┌ \D{%b-%d %H:%M:%S} ┐ \[\e[0m\]"
-    local dir="\[\e[1;36m\]\w\[\e[0m\]"
-    local git_branch="\[\e[1;35m\]$(parse_git_branch)\[\e[0m\]"
-
-    if (( last == 0 )); then
-        local exit_code="\[\e[38;5;42m\]✓\[\e[0m\]"
-    else
-        local exit_code="\[\e[38;5;196m\]✗ $last\[\e[0m\]"
-    fi
-
-    PS1="$when$dir$git_branch $exit_code "
-}
-
-PROMPT_COMMAND=build_PS1
+# 
+# build_PS1() {
+#     local last=$?
+# 
+#     local when="\[\e[48;5;190;38;5;57m\] ┌ \D{%b-%d %H:%M:%S} ┐ \[\e[0m\]"
+#     local dir="\[\e[1;36m\]\w\[\e[0m\]"
+#     local git_branch="\[\e[1;35m\]$(parse_git_branch)\[\e[0m\]"
+# 
+#     if (( last == 0 )); then
+#         local exit_code="\[\e[38;5;42m\]✓\[\e[0m\]"
+#     else
+#         local exit_code="\[\e[38;5;196m\]✗ $last\[\e[0m\]"
+#     fi
+# 
+#     PS1="$when$dir$git_branch $exit_code "
+# }
+# 
+# PROMPT_COMMAND=build_PS1
