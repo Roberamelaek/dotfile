@@ -3,11 +3,16 @@
 # Compiles each lua file with loadfile (no execution, no plugin downloads).
 # Usage: bash scripts/ci/check-config.sh  (run from repo root)
 set -u
+shopt -s nullglob
 cd "$(dirname "$0")/../.." || exit 1
 fail=0
 
 nlua() {
-  nvim --headless -c "lua assert(loadfile('$1'))" -c 'qa' 2>&1 \
+  if ! command -v nvim >/dev/null 2>&1; then
+    echo "SKIP: nvim not installed"
+    return 0
+  fi
+  nvim --headless -u NONE -c "lua assert(loadfile('$1'))" -c 'qa' 2>&1 \
     | grep -Ei 'error|E[0-9]{3,}' \
     && { echo "FAIL: $1"; fail=1; } || true
 }
