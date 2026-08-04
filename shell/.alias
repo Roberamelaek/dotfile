@@ -7,3 +7,34 @@ alias ls="ls --color=auto"
 alias ll="ls -lah"
 alias la="ls -A"
 alias lt="ls --human-readable --size -1 -S --classify"
+
+# ── tmux functions ──
+nw() {
+  local session="${1:-$(basename "$PWD")}"
+  local window="${2:-$session}"
+  if [[ -n "${TMUX:-}" ]]; then
+    tmux new-window -n "$window"
+  else
+    tmux new-session -d -s "$session" -n "$window"
+    tmux attach-session -t "$session"
+  fi
+}
+
+np() {
+  local dir=""
+  while [[ "${1:-}" == -h || "${1:-}" == -v ]]; do
+    dir+="$1"; shift
+  done
+  dir="${dir:--h}"
+  if [[ -n "${TMUX:-}" ]]; then
+    local name="${1:-$(basename "$PWD")}"
+    local pane
+    pane="$(tmux split-window "$dir" -P -F '#{pane_id}')"
+    tmux select-pane -t "$pane" -T "$name"
+  else
+    local session="${1:-$(basename "$PWD")}"
+    local window="${2:-$session}"
+    tmux new-session -d -s "$session" -n "$window"
+    tmux attach-session -t "$session"
+  fi
+}
