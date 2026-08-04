@@ -18,6 +18,11 @@ before and inside tmux, using short commands instead of long tmux commands.
    new named session and attach.
 3. **Default name.** When no name argument is given, both commands use the
    basename of the current directory (`$(basename "$PWD")`).
+4. **Distinct session/window names (outside tmux).** `nw [session] [window]`
+   accepts up to two names: outside tmux the first names the session and the
+   second names the window (`tmux new-session -s <session> -n <window>`). One
+   argument names both; none uses the directory basename for both. Inside
+   tmux only the window name matters (see `nw` below).
 4. **Pane split direction.** `np` splits horizontally (right half, matching the
    `C-a |` binding) by default; `-h` / `-v` flags override.
 5. **Visible pane names.** `tmux.conf` gains `set -g pane-border-status top` so
@@ -26,12 +31,16 @@ before and inside tmux, using short commands instead of long tmux commands.
 
 ## Behavior
 
-### `nw [name]` — new window
+### `nw [session] [window]` — new window (or session + window)
 
-- **Inside tmux:** `tmux new-window -n "<name>"`. New window inherits the
-  current pane's working directory (tmux default) and is selected.
-- **Outside tmux:** `tmux new-session -d -s "<name>" -n "<name>"` then
-  `tmux attach-session -t "<name>"`. Detach/exit returns to the bash prompt.
+- **Inside tmux:** `tmux new-window -n "<window>"`. The window name is the
+  second argument if given, else the first argument, else the directory
+  basename (the session name is irrelevant inside tmux). New window inherits
+  the current pane's working directory (tmux default) and is selected.
+- **Outside tmux:** `tmux new-session -d -s "<session>" -n "<window>"` then
+  `tmux attach-session -t "<session>"`. Session name = first argument (or
+  basename), window name = second argument (or first, or basename). Detach/exit
+  returns to the bash prompt.
 
 ### `np [-h|-v] [name]` — new pane
 
@@ -39,16 +48,21 @@ before and inside tmux, using short commands instead of long tmux commands.
   `tmux split-window <-h|-v> -P -F '#{pane_id}'`, then
   `tmux rename-pane -t "<id>" "<name>"`. The new pane's title is the name and
   is drawn on the pane border (`.top`). Transition to the new pane: tmux moves
-  focus to it (default split behavior).
-- **Outside tmux:** identical bootstrap to `nw` (session + window named
-  `<name>`, attach). No split is attempted.
+  focus to it (default split behavior). Pane name = first argument (or
+  basename).
+- **Outside tmux:** identical bootstrap to `nw` (session + window named from
+  the arguments as above, attach). No split is attempted.
 
 ### Argument handling
 
-- `$1` is the name for `nw`; `np` consumes `-h`/`-v` first, then `$1`.
+- `nw`: `$1` = session name (outside tmux only), `$2` = window name; window
+  name falls back to `$1`, then to the basename of `$PWD`.
+- `np`: consumes `-h`/`-v` first (any position is not supported — flags must
+  precede the name), then `$1` = pane name (within tmux) or the session name
+  (outside tmux, where `$2` = window name, falling back as `nw` does).
 - No name → basename of `$PWD`.
 - Names may contain spaces; both the shell functions and tmux quote them
-  (`-n "$name"`).
+  (`-n "$window"`).
 
 ### One-line chaining
 
@@ -77,7 +91,8 @@ before and inside tmux, using short commands instead of long tmux commands.
     `#{pane_id}`.) ordering or layout string).
 - Outside-tmux case: fresh session is created and attached; verify session name
   and window name via `tmux list-sessions`/`list-windows` on the default socket
-  (using a temp `$TMUX_TMPDIR` or unique socket, then kill-server).
+  (using a temp `$TMUX_TMPDIR` or unique socket, then kill-server). Include a
+  two-argument case (`nw proj code`) asserting session `proj` and window `code`.
 - `bash scripts/ci/check-config.sh` still exit 0 (parses the modified
   `tmux.conf`).
 - Real-env smoke: `tmux -L (whoami)-manual -f tmux/tmux.conf new-session -d`
