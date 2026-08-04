@@ -1,6 +1,7 @@
 
 ## Prompt
 
+set -o vi
 
 function parse_git_branch() {
     # Parse the current git branch name and print it
@@ -16,5 +17,5 @@ function set_PS1 {
 \[\e[1;35m\][\u@\h]\[\e[0m\]$Ps1Tail '
 }
 
-set_PS1 # Call the set_PS1 function
+#set_PS1 # Call the set_PS1 function
 

@@ -1,1 +1,0 @@
-/home/robera/.dotfiles/.config/init.vim

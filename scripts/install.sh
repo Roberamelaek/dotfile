@@ -13,8 +13,8 @@ packages=("vim" "tmux" "git")
 for package in "${packages[@]}"; do
     if ! package_installed "$package"; then
         echo "Installing $package..."
-        sudo apt update
-        sudo apt install -y "$package"
+        sudo pacman -Syu
+        sudo pacman -S "$package"
     else
         echo "$package is already installed."
     fi
@@ -36,14 +36,12 @@ echo "------------------------------"
 # Set the paths for your configuration files
 nbrc_path="$HOME/.dotfiles/nbrc"
 tmuxrc_path="$HOME/.dotfiles/tmuxrc"
-vimrc_path="$HOME/.dotfiles/vimrc"
 gitconfig_path="$HOME/.dotfiles/gitconfig"
 gitinstall_path="$HOME/.dotfiles/gitconfig/gitinstall.sh"
 
 # Set the destination directories for the symbolic links
 nbrc_dest="$HOME/.nbrc"
 tmuxrc_dest="$HOME/.tmux.conf"
-vimrc_dest="$HOME/.vimrc"
 
 # Function to create or recreate symbolic links
 create_symlink() {
@@ -62,7 +60,6 @@ create_symlink() {
 # Create or recreate symbolic links for the configuration files
 create_symlink "$nbrc_path" "$nbrc_dest"
 create_symlink "$tmuxrc_path" "$tmuxrc_dest"
-create_symlink "$vimrc_path" "$vimrc_dest"
 
 # Run the gitinstall.sh script
 bash "$gitinstall_path"
@@ -78,15 +75,8 @@ for file in "${files[@]}"; do
     fi
 done
 
-#!/bin/bash
-
 # Create directory for Neovim configuration if it doesn't exist
 mkdir -p $HOME/.config/nvim
 
-# Create/initiate plugin manager (assuming you're using vim-plug)
-curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-# Define Neovim configuration file
-
+# Link Neovim config
 bash $HOME/.dotfiles/scripts/install_init_vim.sh
