@@ -76,8 +76,11 @@ before and inside tmux, using short commands instead of long tmux commands.
 - `shell/.alias` — add `nw()` and `np()` functions (Append after existing
   aliases; keep the file's `# ── ... ──` comment-grouping style, e.g. a
   `# ── tmux functions ──` header).
-- `tmux/tmux.conf` — add `set -g pane-border-status top` (in the theme/status
-  section, after `pane-border-style`).
+- `tmux/tmux.conf` — add `set -g pane-border-status top` **and**
+  `set -g pane-border-format '#[bold]#{pane_title}#[default]'` (in the
+  theme/status section, after `pane-border-style`). The default border format
+  only renders the pane index, so the format line is required for pane names to
+  actually show.
 
 ## Testing
 
