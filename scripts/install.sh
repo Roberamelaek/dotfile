@@ -1,92 +1,53 @@
-#!/bin/bash
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Check if a package is installed
-package_installed() {
-    package="$1"
-    dpkg -l | grep -qE "^ii\s+$package\s"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/lib/ui.sh"
+
+SHOW_HELP=false
+DRY_RUN=false
+
+usage() {
+  cat <<'EOF'
+Usage: bash install.sh [--dry-run] [--help]
+
+Dotfiles installer steps:
+  bootstrap   install packages (pacman) and TPM
+  link        create symlinks and shell rc entries
+  git-setup   configure git aliases
+
+Options:
+  --dry-run   preview what would be done (apply no changes)
+  --help      show this help
+EOF
 }
 
-# List of packages to check and install
-packages=("vim" "tmux" "git")
+step() {
+  local name=$1 label=$2
+  if "$DRY_RUN"; then
+    ui::section "[dry-run] $label"
+    ui::info "would run: scripts/$name.sh"
+  else
+    ui::section "$label"
+    bash "$SCRIPT_DIR/$name.sh"
+  fi
+}
 
-for package in "${packages[@]}"; do
-    if ! package_installed "$package"; then
-        echo "Installing $package..."
-        sudo apt update
-        sudo apt install -y "$package"
-    else
-        echo "$package is already installed."
-    fi
+for arg in "$@"; do
+  case "$arg" in
+    --help)    SHOW_HELP=true ;;
+    --dry-run) DRY_RUN=true ;;
+    *) ui::error "unknown option: $arg"; usage; exit 1 ;;
+  esac
 done
 
-echo "---------------------------"
-
-if ! grep -qF "source $HOME/.dotfiles/.alias" ~/.bashrc ; then
-        echo "source $HOME/.dotfiles/.alias"  >> ~/.bashrc
-
-        echo "source $HOME/.dotfiles/.prompt" >> ~/.bashrc
-
+if "$SHOW_HELP"; then
+  usage
+  exit 0
 fi
 
-
-echo "------------------------------"
-
-
-# Set the paths for your configuration files
-nbrc_path="$HOME/.dotfiles/nbrc"
-tmuxrc_path="$HOME/.dotfiles/tmuxrc"
-vimrc_path="$HOME/.dotfiles/vimrc"
-gitconfig_path="$HOME/.dotfiles/gitconfig"
-gitinstall_path="$HOME/.dotfiles/gitconfig/gitinstall.sh"
-
-# Set the destination directories for the symbolic links
-nbrc_dest="$HOME/.nbrc"
-tmuxrc_dest="$HOME/.tmux.conf"
-vimrc_dest="$HOME/.vimrc"
-
-# Function to create or recreate symbolic links
-create_symlink() {
-    local source_file="$1"
-    local dest_file="$2"
-
-    if [[ -e "$dest_file" || -L "$dest_file" ]]; then
-        rm "$dest_file"
-        echo "Deleted existing file or symbolic link: $dest_file"
-    fi
-
-    ln -s "$source_file" "$dest_file"
-    echo "Created symbolic link: $dest_file"
-}
-
-# Create or recreate symbolic links for the configuration files
-create_symlink "$nbrc_path" "$nbrc_dest"
-create_symlink "$tmuxrc_path" "$tmuxrc_dest"
-create_symlink "$vimrc_path" "$vimrc_dest"
-
-# Run the gitinstall.sh script
-bash "$gitinstall_path"
-
-# Array of file names to source
-files=("prompt" "alias")
-
-# Add source commands to .bashrc for each file
-for file in "${files[@]}"; do
-    filepath="$HOME/.dotfiles/.$file"
-    if [[ -f "$filepath" ]]; then
-        echo "source $filepath" >> "$HOME/.bashrc"
-    fi
-done
-
-#!/bin/bash
-
-# Create directory for Neovim configuration if it doesn't exist
-mkdir -p $HOME/.config/nvim
-
-# Create/initiate plugin manager (assuming you're using vim-plug)
-curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-# Define Neovim configuration file
-
-bash $HOME/.dotfiles/scripts/install_init_vim.sh
+ui::info "Starting dotfiles installer..."
+step bootstrap "Bootstrap (packages + TPM)"
+step link      "Link config files"
+step git-setup "Configure git aliases"
+ui::success "Done."

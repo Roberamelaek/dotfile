@@ -1,47 +1,83 @@
-# Dotfiles: Configuration Files for Vim, Tmux, and Git
+# dotfiles
 
-This repository is my personal Configurations file and also comes with an .sh installer. Feel free to configure and personalize the file to suit your preference.
+Personal, professional dotfiles for Neovim, Tmux, Git, and bash on Arch Linux.
 
-This is the basic sample that you can copy and use. Tips to improve and make it more personalized will be appreciated.
+[![Neovim](https://img.shields.io/badge/Neovim-0.10%2B-57A143?logo=neovim&logoColor=white)](https://neovim.io)
+[![Tmux](https://img.shields.io/badge/Tmux-3.3%2B-1BB91F?logo=gnu&logoColor=white)](https://github.com/tmux/tmux)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Instructions on how to install, use, and personalize will be provided below.
+## Features
 
-## Contents
+### Neovim
+- rose-pine theme (transparent), lualine statusline, bufferline tabs
+- Unified `Ctrl+h/j/k/l` pane navigation shared with tmux
+- LSP completion (nvim-cmp), Telescope, Treesitter, which-key, snacks dashboard,
+  nvim-tree, mini.pairs, Obsidian support
 
-1. vimrc
-2. Tmuxrc
-3. gitconfig.sh
-4. install.sh
+### Tmux
+- Prefix `Ctrl-a`, rose-pine moon theme matching Neovim
+- Session persistence: `Ctrl-a s` save, `Ctrl-a r` restore (tmux-resurrect)
+- tmux-yank, fzf, tmux-sessionx (TPM)
 
-### Installation
+### Shell
+- Colored prompt with git branch, date/time, and exit-code indicator
+- Handy aliases and bash completion
 
-To install and use the configuration provided in this repository, follow these steps:
+### Tmux shortcuts (`nw` / `np`)
+Create and name tmux windows/panes from bash — works inside and outside tmux:
 
+| Command     | Inside tmux                | Outside tmux          |
+|-------------|----------------------------|-----------------------|
+| `nw <name>` | new window named `<name>`  | new session + attach  |
+| `np <name>` | split right, name new pane | same as `nw`          |
+| `np -v <name>` | split below, name pane  | same as `nw`          |
 
-1. firstly you need to use root use
-cd    ```bash
-      sudo -i
+No name given → names come from the current directory. Chain in one line:
+`nw foo && np bar` (pane `bar` lands in window `foo`). Pane names render on
+the pane's top border.
 
-2. Clone the repository to your local machine using the following command:
+## Install
 
-   ```bash
-   git clone https://github.com/Roberamelaek/dotfile.git
-   
-3. Rename the dotfile to .dotfile:
+```bash
+git clone https://github.com/Roberamelaek/dotfile ~/.dotfiles
+cd ~/.dotfiles && bash install.sh
+```
 
-   ```bash
-   mv dotfile .dotfiles
-   
-4. Change into the repository directory:
-   
-   ```bash
-   cd .dotfiles
+Preview without changing anything:
 
-5. Run the configuration script to install the Vim settings:
-   ```bash
-   bash install.sh
-   
-- The files will be copied to your home directory (`~/`) and Vim will be configured accordingly.
-- Now you're all set to use the customized Vim configuration!
-- Feel free to customize the files before you run <code>sh install.sh</code> have fun with the project and leave feadback for more if you have any questions or helpful and fun ideas!!
+```bash
+bash install.sh --dry-run
+```
 
+## Layout
+
+```
+.dotfiles/
+├── nvim/              # Neovim config (symlinked to ~/.config/nvim)
+├── tmux/tmux.conf     # → ~/.tmux.conf
+├── shell/             # .prompt, .alias
+├── obsidian/          # mycss.css
+├── assets/            # wall.png
+├── scripts/           # install.sh, bootstrap.sh, link.sh, git-setup.sh, lib/
+├── nbrc               # `nb` notes config
+└── README.md
+```
+
+## Uninstall
+
+```bash
+rm -f ~/.config/nvim ~/.tmux.conf ~/.nbrc ~/.prompt ~/.alias
+rm -rf ~/.config/wall.png ~/.obsidian/snippets/mycss.css
+rm -rf ~/.tmux/plugins
+# remove the two `source ~/.prompt` / `source ~/.alias` lines from ~/.bashrc
+```
+
+## FAQ
+
+- **Why Arch-only?** The installer targets Arch Linux (`pacman`). The configs
+  themselves are distro-agnostic.
+- **How do I add a plugin?** Add one file to `nvim/lua/plugins/`.
+
+## License
+
+MIT
