@@ -23,6 +23,19 @@ Personal, professional dotfiles for Neovim, Tmux, Git, and bash on Arch Linux.
 - Colored prompt with git branch, date/time, and exit-code indicator
 - Handy aliases and bash completion
 
+### Tmux shortcuts (`nw` / `np`)
+Create and name tmux windows/panes from bash — works inside and outside tmux:
+
+| Command     | Inside tmux                | Outside tmux          |
+|-------------|----------------------------|-----------------------|
+| `nw <name>` | new window named `<name>`  | new session + attach  |
+| `np <name>` | split right, name new pane | same as `nw`          |
+| `np -v <name>` | split below, name pane  | same as `nw`          |
+
+No name given → names come from the current directory. Chain in one line:
+`nw foo && np bar` (pane `bar` lands in window `foo`). Pane names render on
+the pane's top border.
+
 ## Install
 
 ```bash
