@@ -1,56 +1,9 @@
-# ─────────────────────────────────────────────────────────────
-#  shell aliases
-# ─────────────────────────────────────────────────────────────
-
-# ── system ──
-alias ls='ls --color=auto'
-alias ll='ls -lah'
-alias la='ls -A'
-alias l='ls -CF'
-alias grep='grep --color=auto'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias c='clear'
-
-# ── git ──
-alias g='git'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit'
-alias gp='git push'
-alias gpl='git pull'
-alias gd='git diff'
-alias gl='git log --oneline --graph'
-alias gb='git branch'
-alias gco='git checkout'
-alias gst='git stash'
-alias gpo='git push origin HEAD'
-alias ga.='git add .'
-alias gcm='git commit -m'
-alias gcam='git add . && git commit -m'
-alias glog='git log --oneline --decorate --graph --all'
-
-# ── nvim / vim ──
-alias v='nvim'
-alias vim='nvim'
-alias vi='nvim'
-
-# ── tmux ──
-alias tm='tmux attach -t main || tmux new -s main'
-alias tml='tmux list-sessions'
-
-# ── misc ──
-alias open='xdg-open'
-alias p='pwd'
-alias h='history'
-alias mkdir='mkdir -p'
-alias cp='cp -i'
-alias mv='mv -i'
-alias rm='rm -I'
-alias df='df -h'
-alias du='du -sh'
-alias untar='tar -xvf'
-alias py='python3'
-alias pip='pip3'
-alias wifi='nmcli radio wifi'
+# Convenience aliases
+alias g="git"
+alias v="vim"
+alias nv="nvim"
+alias lazy="lazygit"
+alias ls="ls --color=auto"
+alias ll="ls -lah"
+alias la="ls -A"
+alias lt="ls --human-readable --size -1 -S --classify"
