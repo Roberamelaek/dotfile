@@ -38,7 +38,7 @@ visuals (rose-pine everywhere), gorgeous install output, and a professional READ
 │           ├── cmp.lua
 │           ├── telescope.lua
 │           ├── which-key.lua
-│           ├── snacks.lua
+│           ├── snack.lua
 │           ├── nvim-tree.lua    # renamed out of formatter.lua
 │           ├── mini-pairs.lua   # split out of formatter.lua
 │           └── obsidian.lua
@@ -82,7 +82,8 @@ visuals (rose-pine everywhere), gorgeous install output, and a professional READ
 
 ### Config structure
 - `lua/config/options.lua` — all editor settings (numbers, tabs, search, scrolloff,
-  signcolumn) grouped with comments.
+  signcolumn) grouped with comments. Content is recovered from the deleted-but-
+  still-in-git-history `lua/set.lua` (`git show HEAD:.config/nvim/lua/set.lua`).
 - `lua/config/lazy.lua` — bootstrap only.
 
 ## Tmux Changes
@@ -91,7 +92,10 @@ visuals (rose-pine everywhere), gorgeous install output, and a professional READ
   tmux-yank, fzf, rose-pine/tmux (moon variant — matches nvim rose-pine).
 - Status bar: enable rose-pine theme + clean statusbar config (session/window/pane
   info, same accent colors as nvim).
-- vim-tmux-navigator bindings added to tmux.conf (`Ctrl+hjkl`).
+- vim-tmux-navigator bindings added to tmux.conf (`Ctrl+hjkl`). This requires the
+  standard `is_vim` detection snippet (`if-shell` + `is_vim` env check) so tmux
+  hands the key to nvim when a nvim instance is in the pane — otherwise the
+  unified Ctrl+hjkl navigation does not work.
 - Session integration: tmux-resurrect saves/restores with `Ctrl-a s` / `Ctrl-a r`;
   keep `@resurrect-strategy-nvim 'session'` to restore nvim sessions.
 - install.sh installs TPM (currently referenced but never installed).
@@ -103,6 +107,9 @@ visuals (rose-pine everywhere), gorgeous install output, and a professional READ
 - `.alias`: keep + add a few sensible ones (e.g. lazy).
 - `scripts/lib/ui.sh`: shared helpers — `info`, `success`, `warn`, `error`,
   section banners, checkmarks, spinner for long installs.
+- `bootstrap.sh`: Arch-only, uses `pacman` consistently for package checks +
+  installs (current `install.sh` mixes a `dpkg -l` probe with `pacman` — that
+  inconsistency is removed).
 - `install.sh` = pretty driver: bootstrap → link → git-setup, each printing colored
   sectioned output; `--dry-run` preview; idempotent (no .bashrc duplicates).
 
@@ -119,7 +126,9 @@ visuals (rose-pine everywhere), gorgeous install output, and a professional READ
 - `vimrc` — nvim fully replaces vim; `~/.vimrc` symlink dropped.
 - `gitconfig/gitinstall.sh` — folded into `scripts/git-setup.sh`.
 - `scripts/install_init_vim.sh` — logic folded into `scripts/link.sh`.
-- Old `lua/*.lua` vim-plug files (already deleted in working tree).
+- Old `lua/*.lua` vim-plug files (deleted in working tree but **uncommitted**).
+  The lazy.nvim migration is currently unstaged on branch `Lazy`; the
+  implementation plan starts with a commit of that migration as its baseline.
 
 ## Files Moved
 
