@@ -1,10 +1,10 @@
 return {
   "nvim-lualine/lualine.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
+  dependencies = { "rose-pine/neovim", "nvim-tree/nvim-web-devicons" },
   event = "VeryLazy",
   config = function()
     local theme = require("lualine.themes.rose-pine")
-    for _, mode in ipairs({ "normal", "insert", "visual", "replace", "command", "terminal", "inactive" }) do
+    for _, mode in ipairs({ "normal", "insert", "visual", "replace", "command", "inactive" }) do
       if theme[mode] and theme[mode].c then
         theme[mode].c.bg = "none" -- transparent to match the transparent nvim theme
       end
