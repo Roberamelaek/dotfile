@@ -46,7 +46,7 @@ before and inside tmux, using short commands instead of long tmux commands.
 
 - **Inside tmux:** captures the new pane id via
   `tmux split-window <-h|-v> -P -F '#{pane_id}'`, then
-  `tmux rename-pane -t "<id>" "<name>"`. The new pane's title is the name and
+  `tmux select-pane -t "<id>" -T "<name>"`. The new pane's title is the name and
   is drawn on the pane border (`.top`). Transition to the new pane: tmux moves
   focus to it (default split behavior). Pane name = first argument (or
   basename).

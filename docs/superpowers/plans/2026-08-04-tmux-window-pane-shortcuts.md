@@ -112,7 +112,7 @@ np() {
     local name="${1:-$(basename "$PWD")}"
     local pane
     pane="$(tmux split-window "$dir" -P -F '#{pane_id}')"
-    tmux rename-pane -t "$pane" "$name"
+    tmux select-pane -t "$pane" -T "$name"
   else
     local session="${1:-$(basename "$PWD")}"
     local window="${2:-$session}"
@@ -127,6 +127,7 @@ outside tmux creates session `proj` with window `code` then attaches; `nw` with
 no args names both from the current directory basename. `np -v api` splits
 vertically naming the new pane `api`; `np api` (no flag) splits horizontally.
 Pythagorean note: `np -h -v ...` (two flags) is unsupported — at most one flag.
+Pane titles are set with `select-pane -T` (tmux has no `rename-pane` command).
 
 - [ ] **Step 3: Run the test to verify it passes (syntax + presence)**
 
