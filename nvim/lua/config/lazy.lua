@@ -1,4 +1,4 @@
--- Bootstrap lazy.nvim
+-- Bootstrap lazy.nvim (this file is the only loader entry point).
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -15,28 +15,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Make sure to setup `mapleader` and `maplocalleader` before
--- loading lazy.nvim so that mappings are correct.
--- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    -- import your plugins
     { import = "plugins" },
   },
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "tokyonight" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
-  -- Apply rose-pine theme on startup
-  config = function()
-    vim.cmd.colorscheme("rose-pine")
-    -- Make background transparent
-    vim.api.nvim_set_hl(0, "Normal", {bg = 'none'})
-    vim.api.nvim_set_hl(0, "NormalFloat", {bg = 'none'})
-  end,
 })
