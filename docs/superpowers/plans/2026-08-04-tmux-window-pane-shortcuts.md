@@ -55,10 +55,13 @@ Run:
 ```bash
 bash scripts/ci/check-config.sh; echo "config exit=$?"
 tmux -L "$(whoami)-manual" -f tmux/tmux.conf new-session -d -s t && \
-  tmux -L "$(whoami)-manual" display -p '#{pane_border_status}:#{pane_border_format}' && \
+  tmux -L "$(whoami)-manual" show-options -g pane-border-status pane-border-format && \
   tmux -L "$(whoami)-manual" kill-server
 ```
-Expected: `config exit=0`, last display prints `top:#[bold]#{pane_title}#[default]`, no error.
+Expected: `config exit=0`, and `show-options` prints `pane-border-status top` +
+`pane-border-format #[bold]#{pane_title}#[default]`, no error. (Do NOT read the
+options back via `#{pane_border_status}`/`#{pane_border_format}` format
+expansions — those variables do not exist in tmux; use `show-options`.)
 
 - [ ] **Step 5: Commit**
 
